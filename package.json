@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Rosenmatt1/back-end-weather-buddy/issues"
   },
-  "homepage": "https://github.com/Rosenmatt1/back-end-weather-buddy#readme"
+  "homepage": "https://github.com/Rosenmatt1/back-end-weather-buddy#readme",
+  "dependencies": {
+    "knex": "^0.16.3",
+    "pg": "^7.9.0"
+  }
 }
