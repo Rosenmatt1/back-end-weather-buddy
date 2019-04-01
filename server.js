@@ -8,61 +8,96 @@ const knex = require('knex')(config)
 
 const cors = require('cors')
 const parser = require('body-parser')
-const dotenv = require("dotenv")
+const dotenv = require("dotenv").config()
 
 app.use(parser.json())
 app.use(cors())
 
 app.get('/', (req, res) => {
   knex('alerts')
-    .then((flashcards) => {
-      res.send(flashcards);
+    .then((alerts) => {
+      res.status(200).send(alerts);
     })
     .catch((err) => {
       next(err);
     });
 })
 
-app.get('/myweatherbuddy', (req, res) => {
+app.get('/user/:id', (req, res) => {
   knex('alerts')
-    .then((flashcards) => {
-      res.send(flashcards);
+    .then((alerts) => {
+      res.status(200).send(alerts);
+    })
+    .catch((err) => {
+      next(err);
+    })
+})
+
+app.post('/create/:email', (req, res, next) => {
+  knex('users').insert(req.body).returning('*')
+    .then((user) => {
+      res.status(200).send(user);
     })
     .catch((err) => {
       next(err);
     });
 })
 
-app.post('/myweatherbuddy', (req, res, next) => {
+app.post('/alert/:UserID', (req, res, next) => {
   knex('alerts').insert(req.body).returning('*')
-    .then((flashcard) => {
-      res.send(flashcard);
+    .then((user) => {
+      res.status(200).send(user);
     })
     .catch((err) => {
       next(err);
     });
 })
 
-app.put('/myweatherbuddy/:id', (req, res, next) => {
+app.patch('/alert/:alertID', (req, res, next) => {
   knex('alerts').update(req.body).where('id', req.params.id).returning('*')
-    .then((rows) => {
-      res.send(rows);
+    .then((alert) => {
+      res.status(200).send(alert);
     })
     .catch((err) => {
       next(err);
     });
 })
 
-app.delete('/myweatherbuddy/:id', (req, res, next) => {
+// app.patch('/reminders/:id', (req, res, next) => {
+//   knex('reminders')
+//     .where({ 'id': req.params.id })
+//     .update({ name: "Sweep" })
+//     .returning('*')
+//     .then((rows) => {
+//       res.send(rows);
+//     })
+//     .catch((err) => {
+//       next(err);
+//     });
+// })
+
+app.delete('/alert/:alertID', (req, res, next) => {
   console.log("req body", req.body)
   knex('alerts').del(req.body).where('id', req.params.id).returning('*')
-    .then((rows) => {
-      res.send(rows);
+    .then((alert) => {
+      res.status(200).send("Delete Successful");
     })
     .catch((err) => {
       next(err);
     });
 })
+
+// app.delete('/reminders/:id', (req, res, next) => {
+//   knex('reminders')
+//     .where({ 'id': req.params.id })
+//     .del()
+//     .then((reminder) => {
+//       res.send("Delete Successful");
+//     })
+//     .catch((err) => {
+//       next(err);
+//     });
+// })
 
 // app.get('/:tag', (req, res, next) => {
 //   const tag = req.params.tag
@@ -83,7 +118,6 @@ app.delete('/myweatherbuddy/:id', (req, res, next) => {
 // })
 
 
-
 // app.get('/', (req, res) => {
 //   return knex('chores')
 //     .then(chores => {
@@ -97,6 +131,12 @@ app.delete('/myweatherbuddy/:id', (req, res, next) => {
 //     })
 // })
 
+app.use(function (req, res, next) {
+  res.status(404).send("That doesnot exist!")
+})
 
+app.use(function (req, res, next) {
+  res.status(500).send("Something on our end is broken, please try back!")
+})
 
 app.listen(port, () => console.log(`Weather Alerts on ${port}!`))

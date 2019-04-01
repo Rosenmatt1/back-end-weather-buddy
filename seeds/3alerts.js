@@ -6,18 +6,18 @@ exports.seed = function (knex, Promise) {
       return knex('alerts').insert([
         {
           message: "Wear shorts and sandals",
-          user_id: "",
-          type_id: "",
+          user_id: 3,
+          type_id: 2,
         },
         {
           message: "Wear thermals with hat and gloves",
-          user_id: "",
-          type_id: "",
+          user_id: 1,
+          type_id: 3,
         },
         {
           message: "sleep in",
-          user_id: "",
-          type_id: "",
+          user_id: 2,
+          type_id: 1,
         }
       ])
     })
