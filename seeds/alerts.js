@@ -1,5 +1,3 @@
-
-
 exports.seed = function (knex, Promise) {
   // Deletes ALL existing entries
   return knex('alerts').del()
@@ -7,28 +5,25 @@ exports.seed = function (knex, Promise) {
       // Inserts seed entries
       return knex('alerts').insert([
         {
-          id: 1,
-          name: ".map",
-          description: "creates a new array with the results of calling a provided function on every element in the calling array.",
-          link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map"
+          message: "Wear shorts and sandals",
+          user_id: "",
+          type_id: "",
         },
         {
-          id: 2,
-          name: ".filter",
-          description: "creates a new array with all elements that pass the test implemented by the provided function.",
-          link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter"
+          message: "Wear thermals with hat and gloves",
+          user_id: "",
+          type_id: "",
         },
         {
-          id: 3,
-          name: ".reduce",
-          description: "executes a reducer function (that you provide) on each member of the array resulting in a single output value.",
-          link: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce"
+          message: "sleep in",
+          user_id: "",
+          type_id: "",
         }
       ])
     })
     .then(() => {
       return knex.raw(
-        "SELECT setval('methods_id_seq',(SELECT MAX(id) FROM methods))"
+        "SELECT setval('alerts_id_seq',(SELECT MAX(id) FROM alerts))"
       )
     })
 }
