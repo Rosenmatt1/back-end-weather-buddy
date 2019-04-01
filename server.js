@@ -23,10 +23,11 @@ app.get('/', (req, res) => {
     });
 })
 
-app.get('/user/:id', (req, res) => {
+app.get('/user/:id', (req, res, next) => {
   knex('alerts')
-    .then((alerts) => {
-      res.status(200).send(alerts);
+    .where('id', req.params.id).returning('*')
+    .then((alert) => {
+      res.status(200).send(alert)
     })
     .catch((err) => {
       next(err);
@@ -78,7 +79,7 @@ app.patch('/alert/:alertID', (req, res, next) => {
 
 app.delete('/alert/:alertID', (req, res, next) => {
   console.log("req body", req.body)
-  knex('alerts').del(req.body).where('id', req.params.id).returning('*')
+  knex('alerts').del().where('id', req.params.id).returning('*')
     .then((alert) => {
       res.status(200).send("Delete Successful");
     })
