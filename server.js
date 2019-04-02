@@ -88,17 +88,7 @@ app.delete('/alert/:alertID', (req, res, next) => {
     });
 })
 
-// app.delete('/reminders/:id', (req, res, next) => {
-//   knex('reminders')
-//     .where({ 'id': req.params.id })
-//     .del()
-//     .then((reminder) => {
-//       res.send("Delete Successful");
-//     })
-//     .catch((err) => {
-//       next(err);
-//     });
-// })
+
 
 // app.get('/:tag', (req, res, next) => {
 //   const tag = req.params.tag
