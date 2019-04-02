@@ -34,7 +34,7 @@ app.get('/user/:id', (req, res, next) => {
     })
 })
 
-app.post('/create/:email', (req, res, next) => {
+app.post('/create/', (req, res, next) => {
   knex('users').insert(req.body).returning('*')
     .then((user) => {
       res.status(200).send(user);
