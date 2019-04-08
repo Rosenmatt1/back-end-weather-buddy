@@ -5,23 +5,11 @@ exports.seed = function (knex, Promise) {
       // Inserts seed entries
       return knex('types').insert([
         {
-          maxTemp: 90,
-          minTemp: 40,
-          chanceRain: 60,
-          inchesSnow: 4,
+          type: max,
         },
         {
-          maxTemp: null,
-          minTemp: 50,
-          chanceRain: null,
-          inchesSnow: null,
+          type: min
         },
-        {
-          maxTemp: 75,
-          minTemp: null,
-          chanceRain: null,
-          inchesSnow: null,
-        }
       ])
     })
     .then(() => {

@@ -1,3 +1,5 @@
+//The types table is to make the types dynamic if rain and snow are added.  To allow for other than temp. 
+
 exports.up = function (knex, Promise) {
   return knex.schema.createTable('types', table => {
     table.increments('id')

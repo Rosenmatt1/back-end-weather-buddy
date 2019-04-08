@@ -6,19 +6,21 @@ exports.seed = function (knex, Promise) {
       return knex('alerts').insert([
         {
           message: "Wear shorts and sandals",
-          user_id: 3,
-          type_id: 2,
+          user_id: 1,
+          type: 'max',
+          chosenTemp: 90,
         },
         {
           message: "Wear thermals with hat and gloves",
           user_id: 1,
-          type_id: 3,
+          type: 'min',
+          chosenTemp: 40,
         },
-        {
-          message: "sleep in",
-          user_id: 2,
-          type_id: 1,
-        }
+        // {
+        //   message: "sleep in",
+        //   user_id: 2,
+        //   type: 1,
+        // }
       ])
     })
     .then(() => {

@@ -3,7 +3,9 @@ exports.up = function (knex, Promise) {
     table.increments('id')
     table.string('message').notNullable().defaultsTo('')
     table.integer('user_id').notNullable().references('id').inTable('users').onDelete('CASCADE').index()
-    table.integer('type_id').notNullable().references('id').inTable('types').onDelete('CASCADE').index()
+    table.string('type').notNullable().defaultsTo('')
+    table.integer('chosenTemp').notNullable().defaultsTo('')
+    // table.integer('type_id').notNullable().references('id').inTable('types').onDelete('CASCADE').index()
   })
 }
 
