@@ -9,18 +9,28 @@ exports.seed = function (knex, Promise) {
           user_id: 1,
           type: 'max',
           chosenTemp: 90,
+          weatherTemp: 95,
         },
         {
           message: "Wear thermals with hat and gloves",
           user_id: 1,
           type: 'min',
           chosenTemp: 40,
+          weatherTemp: 20,
+        },
+        {
+          message: "Run for the hills",
+          user_id: 1,
+          type: 'min',
+          chosenTemp: 20,
+          weatherTemp: 50,
         },
         {
           message: "sleep in",
           user_id: 2,
           type: 'min',
-          chosenTemp: 20,
+          chosenTemp: 40,
+          weatherTemp: 35,
         }
       ])
     })

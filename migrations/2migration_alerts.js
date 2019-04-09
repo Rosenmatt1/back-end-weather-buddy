@@ -4,7 +4,8 @@ exports.up = function (knex, Promise) {
     table.string('message').notNullable().defaultsTo('')
     table.integer('user_id').notNullable().references('id').inTable('users').onDelete('CASCADE').index()
     table.string('type').notNullable().defaultsTo('')
-    table.integer('chosenTemp').notNullable().defaultsTo(50)
+    table.integer('chosenTemp').notNullable().defaultsTo(0)
+    table.integer('weatherTemp').notNullable().defaultsTo(0)
     // table.integer('type_id').notNullable().references('id').inTable('types').onDelete('CASCADE').index()
   })
 }
