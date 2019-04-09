@@ -16,11 +16,12 @@ exports.seed = function (knex, Promise) {
           type: 'min',
           chosenTemp: 40,
         },
-        // {
-        //   message: "sleep in",
-        //   user_id: 2,
-        //   type: 1,
-        // }
+        {
+          message: "sleep in",
+          user_id: 2,
+          type: 'min',
+          chosenTemp: 20,
+        }
       ])
     })
     .then(() => {
