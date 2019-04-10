@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
 
 app.get('/user/:id', (req, res, next) => {
   knex('alerts')
-    .where('user_id', req.params.id).returning('*')
+    .where('user_id', req.params.id)
     .then((alerts) => {
       res.status(200).send(alerts)
     })
@@ -44,7 +44,7 @@ app.post('/create/', (req, res, next) => {
     });
 })
 
-app.post('/alert/:UserID', (req, res, next) => {
+app.post('/alert/', (req, res, next) => {
   knex('alerts').insert(req.body).returning('*')
     .then((user) => {
       res.status(200).send(user);
