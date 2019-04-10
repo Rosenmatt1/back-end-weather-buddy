@@ -25,9 +25,9 @@ app.get('/', (req, res) => {
 
 app.get('/user/:id', (req, res, next) => {
   knex('alerts')
-    .where('id', req.params.id).returning('*')
-    .then((alert) => {
-      res.status(200).send(alert)
+    .where('user_id', req.params.id).returning('*')
+    .then((alerts) => {
+      res.status(200).send(alerts)
     })
     .catch((err) => {
       next(err);
