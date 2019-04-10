@@ -54,7 +54,7 @@ app.post('/alert/', (req, res, next) => {
     });
 })
 
-app.patch('/alert/:alertID', (req, res, next) => {
+app.patch('/alert/:id', (req, res, next) => {
   knex('alerts').update(req.body).where('id', req.params.id).returning('*')
     .then((alert) => {
       res.status(200).send(alert);
@@ -77,8 +77,7 @@ app.patch('/alert/:alertID', (req, res, next) => {
 //     });
 // })
 
-app.delete('/alert/:alertID', (req, res, next) => {
-  console.log("req body", req.body)
+app.delete('/alert/:id', (req, res, next) => {
   knex('alerts').del().where('id', req.params.id).returning('*')
     .then((alert) => {
       res.status(200).send("Delete Successful");
@@ -87,7 +86,6 @@ app.delete('/alert/:alertID', (req, res, next) => {
       next(err);
     });
 })
-
 
 
 // app.get('/:tag', (req, res, next) => {
