@@ -3,7 +3,6 @@ exports.up = function (knex, Promise) {
     table.increments('id')
     table.string('message').notNullable().defaultsTo('')
     table.integer('user_id').notNullable().references('id').inTable('users').onDelete('CASCADE').index()
-    table.string('user_email').notNullable().references('email').inTable('users').onDelete('CASCADE').index()
     table.string('type').notNullable().defaultsTo('')
     table.integer('chosenTemp').notNullable().defaultsTo(0)
     table.integer('weatherTemp').notNullable().defaultsTo(0)

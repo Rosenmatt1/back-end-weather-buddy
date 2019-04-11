@@ -7,7 +7,6 @@ exports.seed = function (knex, Promise) {
         {
           message: "Wear shorts and sandals",
           user_id: 1,
-          user_email: 'matty85@aol.com',
           type: 'max',
           chosenTemp: 90,
           weatherTemp: 95,
@@ -15,7 +14,6 @@ exports.seed = function (knex, Promise) {
         {
           message: "Wear thermals with hat and gloves",
           user_id: 1,
-          user_email: 'matty85@aol.com',
           type: 'min',
           chosenTemp: 40,
           weatherTemp: 20,
@@ -23,7 +21,6 @@ exports.seed = function (knex, Promise) {
         {
           message: "Run for the hills",
           user_id: 1,
-          user_email: 'matty85@aol.com',
           type: 'min',
           chosenTemp: 20,
           weatherTemp: 50,
@@ -31,7 +28,6 @@ exports.seed = function (knex, Promise) {
         {
           message: "sleep in",
           user_id: 2,
-          user_email: 'jane52@aol.com',
           type: 'min',
           chosenTemp: 40,
           weatherTemp: 35,
