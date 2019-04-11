@@ -57,12 +57,14 @@ app.post('/alert', (req, res, next) => {
   knex('alerts').insert(req.body).returning('*')
     .then((alert) => {
       res.status(200).send(alert);
+      console.log("Alerter1", alert)
     })
     .then(alerter => {
+      console.log("Alerter2", alerter)
       return knex('users')
         .where('users.id', req.body.user_id)
         .then(user => {
-          console.log("Alerter", alerter)
+          console.log("Alerter3", alerter)
           if (alerter.type === 'max' && alerter.weatherTemp > alerter.chosenTemp) {
             return setTimeout(() => {
               client.messages.create({
