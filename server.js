@@ -58,6 +58,7 @@ app.post('/alert', (req, res, next) => {
     .then((alert) => {
       res.status(200).send(alert);
       console.log("Alerter1", alert)
+      return alert
     })
     .then(alerter => {
       console.log("Alerter2", alerter)
@@ -65,9 +66,11 @@ app.post('/alert', (req, res, next) => {
         .where('users.id', req.body.user_id)
         .then(user => {
           console.log("Alerter3", alerter)
+          console.log("weatherTemp", typeof alerter.weatherTemp)
+          console.log("chosenTemp", typeof alerter.chosenTemp)
           if (alerter.type === 'max' && alerter.weatherTemp > alerter.chosenTemp) {
-            return setTimeout(() => {
-              client.messages.create({
+            setTimeout(() => {
+              return client.messages.create({
                 to: '+16177193300',
                 from: '+18572693922',
                 body: req.body.message
@@ -75,8 +78,8 @@ app.post('/alert', (req, res, next) => {
             }, 1000)
               .then((message) => console.log(message))
           } else if (alerter.type === 'min' && alerter.weatherTemp < alerter.chosenTemp) {
-            return setTimeout(() => {
-              client.messages.create({
+             setTimeout(() => {
+               return client.messages.create({
                 to: '+16177193300',
                 from: '+18572693922',
                 body: req.body.message
