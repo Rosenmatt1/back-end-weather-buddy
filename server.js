@@ -51,26 +51,39 @@ app.post('/create/', (req, res, next) => {
     });
 })
 
-//for capstone doign the text in a post request,but will use a chron function in the future https://www.npmjs.com/package/node-schedule
+//for capstone doign the text in a post request,but will use a chron function in the future https://www.npmjs.com/package/node-schedule  a function that runs every night and maps over all alerts and sends text if meets criteria"
 
 app.post('/alert', (req, res, next) => {
   knex('alerts').insert(req.body).returning('*')
     .then((alert) => {
       res.status(200).send(alert);
     })
-    .then(alert => {
+    .then(alerter => {
       return knex('users')
         .where('users.id', req.body.user_id)
         .then(user => {
-          console.log("Alert", alert)
-          return setTimeout( () => {
-            client.messages.create({
-              to: '+16177193300',
-              from: '+18572693922',
-              body: req.body.message
-            })
-          }, 1000)
-            .then((message) => console.log(message))
+          console.log("Alerter", alerter)
+          if (alerter.type === 'max' && alerter.weatherTemp > alerter.chosenTemp) {
+            return setTimeout(() => {
+              client.messages.create({
+                to: '+16177193300',
+                from: '+18572693922',
+                body: req.body.message
+              })
+            }, 1000)
+              .then((message) => console.log(message))
+          } else if (alerter.type === 'min' && alerter.weatherTemp < alerter.chosenTemp) {
+            return setTimeout(() => {
+              client.messages.create({
+                to: '+16177193300',
+                from: '+18572693922',
+                body: req.body.message
+              })
+            }, 1000)
+              .then((message) => console.log(message))
+          } else {
+            console.log("it didn't work")
+          }
         })
     })
     .catch((err) => {
