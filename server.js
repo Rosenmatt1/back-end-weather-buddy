@@ -19,8 +19,6 @@ app.use(cors())
 
 const client = require('twilio')(accountSid, authToken)
 
-
-
 app.get('/', (req, res) => {
   knex('alerts')
     .then((alerts) => {
@@ -59,18 +57,19 @@ app.post('/alert', (req, res, next) => {
   knex('alerts').insert(req.body).returning('*')
     .then((alert) => {
       res.status(200).send(alert);
-      // return alert
     })
     .then(alert => {
       return knex('users')
         .where('users.id', req.body.user_id)
         .then(user => {
           console.log("Alert", alert)
-          return client.messages.create({
-            to: '+16177193300',
-            from: '+18572693922',
-            body: req.body.message
-          })
+          return setTimeout( () => {
+            client.messages.create({
+              to: '+16177193300',
+              from: '+18572693922',
+              body: req.body.message
+            })
+          }, 1000)
             .then((message) => console.log(message))
         })
     })
