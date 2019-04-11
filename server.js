@@ -19,14 +19,6 @@ app.use(cors())
 
 const client = require('twilio')(accountSid, authToken)
 
-client.messages.create({
-  to: myNumber,
-  from: '+18572693922',
-  body: 'Capstone ready!'
-})
-.then((message) => console.log(message.sid))
-
-
 app.get('/', (req, res) => {
   knex('alerts')
     .then((alerts) => {
@@ -53,20 +45,31 @@ app.post('/create/', (req, res, next) => {
     .then((user) => {
       res.status(200).send(user);
     })
+
     .catch((err) => {
       next(err);
     });
 })
 
+//for capstone 
+
 app.post('/alert/', (req, res, next) => {
   knex('alerts').insert(req.body).returning('*')
-    .then((user) => {
-      res.status(200).send(user);
+    .then((alert) => {
+      console.log(alert)
+      res.status(200).send(alert);
     })
     .catch((err) => {
       next(err);
     });
 })
+
+client.messages.create({
+  to: myNumber,
+  from: '+18572693922',
+  body: 'Capstone ready!'
+})
+  .then((message) => console.log(message))
 
 app.patch('/alert/:id', (req, res, next) => {
   knex('alerts').update(req.body).where('id', req.params.id).returning('*')
