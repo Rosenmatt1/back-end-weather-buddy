@@ -19,6 +19,8 @@ app.use(cors())
 
 const client = require('twilio')(accountSid, authToken)
 
+
+
 app.get('/', (req, res) => {
   knex('alerts')
     .then((alerts) => {
@@ -51,25 +53,47 @@ app.post('/create/', (req, res, next) => {
     });
 })
 
-//for capstone 
+//for capstone doign the text in a post request,but will use a chron function in the future https://www.npmjs.com/package/node-schedule
 
-app.post('/alert/', (req, res, next) => {
+app.post('/alert', (req, res, next) => {
   knex('alerts').insert(req.body).returning('*')
     .then((alert) => {
-      console.log(alert)
       res.status(200).send(alert);
+      // return alert
+    })
+    .then(alert => {
+      return knex('users')
+        .where('users.id', req.body.user_id)
+        .then(user => {
+          console.log("Alert", alert)
+          return client.messages.create({
+            to: '+16177193300',
+            from: '+18572693922',
+            body: req.body.message
+          })
+            .then((message) => console.log(message))
+        })
     })
     .catch((err) => {
       next(err);
     });
 })
 
-client.messages.create({
-  to: myNumber,
-  from: '+18572693922',
-  body: 'Capstone ready!'
-})
-  .then((message) => console.log(message))
+  // `+1${user.phone}`
+
+// app.get('/', (req, res) => {
+//   return knex('chores')
+//     .then(chores => {
+//       const getHouseDuty = chores.map(chore => {
+//         return knex('roommates')
+//           .join('chores', 'roommates.id', 'chores.roommate_id')
+//           .where('roommates.id', chore.roommate_id)
+//           .select('roommates.name', 'chores.chore')
+//       })
+//       return Promise.all(getHouseDuty).then(result => res.send(result))
+//     })
+// })
+
 
 app.patch('/alert/:id', (req, res, next) => {
   knex('alerts').update(req.body).where('id', req.params.id).returning('*')
@@ -124,18 +148,7 @@ app.delete('/alert/:id', (req, res, next) => {
 // })
 
 
-// app.get('/', (req, res) => {
-//   return knex('chores')
-//     .then(chores => {
-//       const getHouseDuty = chores.map(chore => {
-//         return knex('roommates')
-//           .join('chores', 'roommates.id', 'chores.roommate_id')
-//           .where('roommates.id', chore.roommate_id)
-//           .select('roommates.name', 'chores.chore')
-//       })
-//       return Promise.all(getHouseDuty).then(result => res.send(result))
-//     })
-// })
+
 
 app.use(function (req, res, next) {
   res.status(404).send("That doesnot exist!")
