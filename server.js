@@ -96,6 +96,10 @@ app.post('/alert', (req, res, next) => {
 
   // `+1${user.phone}`
 
+// Date.now()
+// const d = new Date()
+// const n = d.getHours()
+
 // app.get('/', (req, res) => {
 //   return knex('chores')
 //     .then(chores => {
