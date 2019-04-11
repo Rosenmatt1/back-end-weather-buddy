@@ -10,8 +10,13 @@ const cors = require('cors')
 const parser = require('body-parser')
 const dotenv = require("dotenv").config()
 
+const accountSid = process.env.ACCOUNT_SID
+const authToken = process.env.AUTH_TOKEN
+
 app.use(parser.json())
 app.use(cors())
+
+
 
 app.get('/', (req, res) => {
   knex('alerts')
