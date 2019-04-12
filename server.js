@@ -94,6 +94,8 @@ app.post('/alert', (req, res, next) => {
     });
 })
 
+// 86400000
+
   // `+1${user.phone}`
 
 // Date.now()
