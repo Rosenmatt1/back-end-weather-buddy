@@ -19,13 +19,6 @@ exports.seed = function (knex, Promise) {
           weatherTemp: 20,
         },
         {
-          message: "Run for the hills",
-          user_id: 1,
-          type: 'min',
-          chosenTemp: 20,
-          weatherTemp: 50,
-        },
-        {
           message: "sleep in",
           user_id: 2,
           type: 'min',
