@@ -69,15 +69,7 @@ app.post('/alert/', (req, res, next) => {
             const date = new Date()
             const hour = date.getHours()
             const minute = date.getMinutes()
-
-            console.log("weathertemp", typeof weatherTemp, weatherTemp)
-            console.log("weathertemp", typeof chosenTemp, chosenTemp)
-            console.log("Temp", weatherTemp > chosenTemp)
-            console.log("hour", hour, hour === 14)
-            console.log("minute", minute, minute === 50)
-
-            if (alert[0].type === 'max' && weatherTemp > chosenTemp && hour === 14 && minute === 50) {
-              console.log("maxer30")
+            if (alert[0].type === 'max' && weatherTemp > chosenTemp && hour === 19 && minute === 00) {
               return client.messages.create({
                 to: `+1${user[0].phone}`,
                 from: '+18572693922',
@@ -86,8 +78,7 @@ app.post('/alert/', (req, res, next) => {
             }
           }, 30000)
           setInterval(() => {
-            if (alert[0].type === 'min' && alert[0].weatherTemp < alert[0].chosenTemp && hour === 14 && minute === 50) {
-              console.log("miner30")
+            if (alert[0].type === 'min' && weatherTemp < chosenTemp && hour === 19 && minute === 00) {
               return client.messages.create({
                 to: `+1${user[0].phone}`,
                 from: '+18572693922',
