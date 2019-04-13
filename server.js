@@ -70,7 +70,7 @@ app.post('/alert/', (req, res, next) => {
           const minute = date.getMinutes()
           console.log(minute)
           setInterval(() => {
-            if (alert[0].type === 'max' && alert[0].weatherTemp > alert[0].chosenTemp && hour === 21 && minute === 0) {
+            if (alert[0].type === 'max' && alert[0].weatherTemp > alert[0].chosenTemp && hour === 14 && minute === 0) {
               return client.messages.create({
                 to: `+1${user[0].phone}`,
                 from: '+18572693922',
@@ -79,7 +79,7 @@ app.post('/alert/', (req, res, next) => {
             }
           }, 30000)
           setInterval(() => {
-            if (alert[0].type === 'min' && alert[0].weatherTemp < alert[0].chosenTemp && hour === 21 && minute === 0) {
+            if (alert[0].type === 'min' && alert[0].weatherTemp < alert[0].chosenTemp && hour === 14 && minute === 0) {
               return client.messages.create({
                 to: `+1${user[0].phone}`,
                 from: '+18572693922',

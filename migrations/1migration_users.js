@@ -8,9 +8,9 @@ exports.up = function (knex, Promise) {
     table.decimal('lat').notNullable().defaultsTo(0)
     table.decimal('long').notNullable().defaultsTo(0)
   })
-};
+}
 
 exports.down = function (knex, Promise) {
   return knex.schema.dropTable('users')
-};
+}
 
