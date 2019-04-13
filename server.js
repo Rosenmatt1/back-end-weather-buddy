@@ -51,7 +51,6 @@ app.post('/create/', (req, res, next) => {
     });
 })
 
-
 //for capstone doign the text in a post request,but will use a chron function in the future https://www.npmjs.com/package/node-schedule  a function that runs every night and maps over all alerts and sends text if meets criteria"
 
 app.post('/alert/', (req, res, next) => {
@@ -65,10 +64,13 @@ app.post('/alert/', (req, res, next) => {
         .where('users.id', req.body.user_id)
         .then(user => {
           const date = new Date()
+          console.log(date)
           const hour = date.getHours()
-          const minute = hour.getMinutes()
+          console.log(hour)
+          const minute = date.getMinutes()
+          console.log(minute)
           setInterval(() => {
-            if (alert[0].type === 'max' && alert[0].weatherTemp > alert[0].chosenTemp && hour === 19 && minute === 0) {
+            if (alert[0].type === 'max' && alert[0].weatherTemp > alert[0].chosenTemp && hour === 21 && minute === 0) {
               return client.messages.create({
                 to: `+1${user[0].phone}`,
                 from: '+18572693922',
@@ -77,7 +79,7 @@ app.post('/alert/', (req, res, next) => {
             }
           }, 30000)
           setInterval(() => {
-            if (alert[0].type === 'min' && alert[0].weatherTemp < alert[0].chosenTemp && hour === 19 && minute === 0) {
+            if (alert[0].type === 'min' && alert[0].weatherTemp < alert[0].chosenTemp && hour === 21 && minute === 0) {
               return client.messages.create({
                 to: `+1${user[0].phone}`,
                 from: '+18572693922',
@@ -91,27 +93,6 @@ app.post('/alert/', (req, res, next) => {
       next(err);
     })
 })
-
-// 86400000
-
-  // `+1${user[0].phone}`
-
-// Date.now()
-// const d = new Date()
-// const n = d.getHours()
-
-// app.get('/', (req, res) => {
-//   return knex('chores')
-//     .then(chores => {
-//       const getHouseDuty = chores.map(chore => {
-//         return knex('roommates')
-//           .join('chores', 'roommates.id', 'chores.roommate_id')
-//           .where('roommates.id', chore.roommate_id)
-//           .select('roommates.name', 'chores.chore')
-//       })
-//       return Promise.all(getHouseDuty).then(result => res.send(result))
-//     })
-// })
 
 
 app.patch('/alert/:id', (req, res, next) => {
@@ -147,7 +128,6 @@ app.delete('/alert/:id', (req, res, next) => {
     });
 })
 
-
 // app.get('/:tag', (req, res, next) => {
 //   const tag = req.params.tag
 //   if (data.tags.includes(tag)) {
@@ -166,8 +146,18 @@ app.delete('/alert/:id', (req, res, next) => {
 //     : res.status(404).send("Told you not to mess with the Chuck")
 // })
 
-
-
+// app.get('/', (req, res) => {
+//   return knex('chores')
+//     .then(chores => {
+//       const getHouseDuty = chores.map(chore => {
+//         return knex('roommates')
+//           .join('chores', 'roommates.id', 'chores.roommate_id')
+//           .where('roommates.id', chore.roommate_id)
+//           .select('roommates.name', 'chores.chore')
+//       })
+//       return Promise.all(getHouseDuty).then(result => res.send(result))
+//     })
+// })
 
 app.use(function (req, res, next) {
   res.status(404).send("That doesnot exist!")
