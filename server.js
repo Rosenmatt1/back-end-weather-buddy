@@ -78,6 +78,9 @@ app.post('/alert/', (req, res, next) => {
             }
           }, 30000)
           setInterval(() => {
+            const date = new Date()
+            const hour = date.getHours()
+            const minute = date.getMinutes()
             if (alert[0].type === 'min' && weatherTemp < chosenTemp && hour === 19 && minute === 00) {
               return client.messages.create({
                 to: `+1${user[0].phone}`,
