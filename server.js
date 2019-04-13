@@ -63,15 +63,20 @@ app.post('/alert/', (req, res, next) => {
       return knex('users')
         .where('users.id', req.body.user_id)
         .then(user => {
-          const date = new Date()
-          console.log(date)
-          const hour = date.getHours()
-          console.log(hour)
-          const minute = date.getMinutes()
-          console.log(minute)
+          const weatherTemp = Number(alert[0].weatherTemp)
+          const chosenTemp = Number(alert[0].chosenTemp)
           setInterval(() => {
-            console.log("setIntervalMax")
-            if (alert[0].type === 'max' && alert[0].weatherTemp > alert[0].chosenTemp && hour === 14 && minute === 20) {
+            const date = new Date()
+            const hour = date.getHours()
+            const minute = date.getMinutes()
+
+            console.log("weathertemp", typeof weatherTemp, weatherTemp)
+            console.log("weathertemp", typeof chosenTemp, chosenTemp)
+            console.log("Temp", weatherTemp > chosenTemp)
+            console.log("hour", hour, hour === 14)
+            console.log("minute", minute, minute === 50)
+
+            if (alert[0].type === 'max' && weatherTemp > chosenTemp && hour === 14 && minute === 50) {
               console.log("maxer30")
               return client.messages.create({
                 to: `+1${user[0].phone}`,
@@ -81,8 +86,7 @@ app.post('/alert/', (req, res, next) => {
             }
           }, 30000)
           setInterval(() => {
-            console.log("setIntervalMin")
-            if (alert[0].type === 'min' && alert[0].weatherTemp < alert[0].chosenTemp && hour === 14 && minute === 20) {
+            if (alert[0].type === 'min' && alert[0].weatherTemp < alert[0].chosenTemp && hour === 14 && minute === 50) {
               console.log("miner30")
               return client.messages.create({
                 to: `+1${user[0].phone}`,
@@ -97,7 +101,6 @@ app.post('/alert/', (req, res, next) => {
       next(err);
     })
 })
-
 
 app.patch('/alert/:id', (req, res, next) => {
   knex('alerts').update(req.body).where('id', req.params.id).returning('*')
