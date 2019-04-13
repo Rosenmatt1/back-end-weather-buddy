@@ -5,8 +5,8 @@ exports.up = function (knex, Promise) {
     table.string('phone').notNullable().defaultsTo("000-0000-0000")
     table.string('email').unique().notNullable()
     table.specificType('hashed_password', 'char(60)').notNullable();
-    table.integer('lat').notNullable().defaultsTo(0)
-    table.integer('long').notNullable().defaultsTo(0)
+    table.decimal('lat').notNullable().defaultsTo(0)
+    table.decimal('long').notNullable().defaultsTo(0)
   })
 };
 
