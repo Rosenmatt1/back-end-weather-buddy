@@ -51,19 +51,35 @@ app.post('/create/', (req, res, next) => {
     });
 })
 
-checkMax = (phone, body) => {
+checkMax = (alertType, weatherTemp, chosenTemp, phone, body) => {
   setInterval(() => {
     const date = new Date()
     const hour = date.getHours()
     const minute = date.getMinutes()
-    if (alert[0].type === 'max' && weatherTemp > chosenTemp && hour === 12 && minute === 44) {
+    if (alertType === 'max' && weatherTemp > chosenTemp && hour === 12 && minute === 49) {
+      return client.messages.create({
+        to: phone,
+        from: '+18572693922',
+        body: body
+      })
+      clearInterval(checkMax)
+    }
+  }, 15000)
+}
+
+checkMin = (alertType, weatherTemp, chosenTemp, phone, body) => {
+  setInterval(() => {
+    const date = new Date()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
+    if (alertType === 'min' && weatherTemp < chosenTemp && hour === 19 && minute === 00) {
       return client.messages.create({
         to: phone,
         from: '+18572693922',
         body: body
       })
     }
-  }, 20000)
+  }, 30000)
 }
 
 //for capstone doign the text in a post request,but will use a chron function in the future https://www.npmjs.com/package/node-schedule  a function that runs every night and maps over all alerts and sends text if meets criteria"
@@ -82,21 +98,11 @@ app.post('/alert/', (req, res, next) => {
           const chosenTemp = Number(alert[0].chosenTemp)
           const phone = `+1${user[0].phone}`
           const body = req.body.message
-          
-          checkMax(phone, body)
+          const alertType = alert[0].type
 
-          setInterval(() => {
-            const date = new Date()
-            const hour = date.getHours()
-            const minute = date.getMinutes()
-            if (alert[0].type === 'min' && weatherTemp < chosenTemp && hour === 19 && minute === 00) {
-              return client.messages.create({
-                to: `+1${user[0].phone}`,
-                from: '+18572693922',
-                body: req.body.message
-              })
-            }
-          }, 30000)
+          checkMax(alertType, weatherTemp, chosenTemp, phone, body)
+          checkMin(alertType, weatherTemp, chosenTemp, phone, body)
+          
         })
     })
     .catch((err) => {
