@@ -56,7 +56,7 @@ checkMax = (phone, body) => {
     const date = new Date()
     const hour = date.getHours()
     const minute = date.getMinutes()
-    if (alert[0].type === 'max' && weatherTemp > chosenTemp && hour === 19 && minute === 00) {
+    if (alert[0].type === 'max' && weatherTemp > chosenTemp && hour === 12 && minute === 44) {
       return client.messages.create({
         to: phone,
         from: '+18572693922',
@@ -83,7 +83,7 @@ app.post('/alert/', (req, res, next) => {
           const phone = `+1${user[0].phone}`
           const body = req.body.message
           
-
+          checkMax(phone, body)
 
           setInterval(() => {
             const date = new Date()
