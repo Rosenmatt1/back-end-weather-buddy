@@ -65,15 +65,17 @@ app.post('/alert/', (req, res, next) => {
         .then(user => {
           const weatherTemp = Number(alert[0].weatherTemp)
           const chosenTemp = Number(alert[0].chosenTemp)
+          const phone = `+1${user[0].phone}`
           setInterval(() => {
             const date = new Date()
             const hour = date.getHours()
             const minute = date.getMinutes()
+            const body = req.body.message
             if (alert[0].type === 'max' && weatherTemp > chosenTemp && hour === 19 && minute === 00) {
               return client.messages.create({
-                to: `+1${user[0].phone}`,
+                to: phone,
                 from: '+18572693922',
-                body: req.body.message
+                body: body
               })
             }
           }, 30000)
