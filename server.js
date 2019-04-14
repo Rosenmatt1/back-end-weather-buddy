@@ -51,6 +51,21 @@ app.post('/create/', (req, res, next) => {
     });
 })
 
+checkMax = (phone, body) => {
+  setInterval(() => {
+    const date = new Date()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
+    if (alert[0].type === 'max' && weatherTemp > chosenTemp && hour === 19 && minute === 00) {
+      return client.messages.create({
+        to: phone,
+        from: '+18572693922',
+        body: body
+      })
+    }
+  }, 20000)
+}
+
 //for capstone doign the text in a post request,but will use a chron function in the future https://www.npmjs.com/package/node-schedule  a function that runs every night and maps over all alerts and sends text if meets criteria"
 
 app.post('/alert/', (req, res, next) => {
@@ -66,19 +81,10 @@ app.post('/alert/', (req, res, next) => {
           const weatherTemp = Number(alert[0].weatherTemp)
           const chosenTemp = Number(alert[0].chosenTemp)
           const phone = `+1${user[0].phone}`
-          setInterval(() => {
-            const date = new Date()
-            const hour = date.getHours()
-            const minute = date.getMinutes()
-            const body = req.body.message
-            if (alert[0].type === 'max' && weatherTemp > chosenTemp && hour === 19 && minute === 00) {
-              return client.messages.create({
-                to: phone,
-                from: '+18572693922',
-                body: body
-              })
-            }
-          }, 30000)
+          const body = req.body.message
+          
+
+
           setInterval(() => {
             const date = new Date()
             const hour = date.getHours()
