@@ -10,6 +10,9 @@ const cors = require('cors')
 const parser = require('body-parser')
 const dotenv = require("dotenv").config()
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 const accountSid = process.env.ACCOUNT_SID
 const authToken = process.env.AUTH_TOKEN
 const myNumber = process.env.MY_NUMBER
