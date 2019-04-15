@@ -32,6 +32,20 @@ app.get('/', (req, res) => {
     });
 })
 
+bcrypt.hash('iLov3bacon!', saltRounds, function (err, hash) {
+  console.log("hash", hash)
+
+  // compare with the matching password
+  bcrypt.compare('iLov3bacon!', hash, function (err, res) {
+    console.log("does this match?", res)
+  });
+
+  // compare with a password that doesn't match
+  bcrypt.compare('bacon_sucks', hash, function (err, res) {
+    console.log("does this match?", res)
+  });
+});
+
 app.get('/user/:id', (req, res, next) => {
   knex('alerts')
     .where('user_id', req.params.id)
