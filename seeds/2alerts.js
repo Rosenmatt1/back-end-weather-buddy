@@ -12,7 +12,7 @@ exports.seed = function (knex, Promise) {
           weatherTemp: 95,
         },
         {
-          message: "Wear thermals with hat and gloves",
+          message: "Wear hat and gloves",
           user_id: 1,
           type: 'min',
           chosenTemp: 40,
