@@ -52,7 +52,7 @@ app.post('/create/', (req, res, next) => {
 })
 
 checkMax = (alertType, weatherTemp, chosenTemp, phone, body) => {
-  setInterval(() => {
+   this.interval = setInterval(() => {
     const date = new Date()
     const hour = date.getHours()
     const minute = date.getMinutes()
@@ -62,9 +62,8 @@ checkMax = (alertType, weatherTemp, chosenTemp, phone, body) => {
         from: '+18572693922',
         body: body
       })
-      clearInterval(checkMax)
     }
-  }, 15000)
+  }, 30000)
 }
 
 checkMin = (alertType, weatherTemp, chosenTemp, phone, body) => {
@@ -102,7 +101,7 @@ app.post('/alert/', (req, res, next) => {
 
           checkMax(alertType, weatherTemp, chosenTemp, phone, body)
           checkMin(alertType, weatherTemp, chosenTemp, phone, body)
-          
+
         })
     })
     .catch((err) => {
