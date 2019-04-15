@@ -32,19 +32,17 @@ app.get('/', (req, res) => {
     });
 })
 
-bcrypt.hash('iLov3bacon!', saltRounds, function (err, hash) {
-  console.log("hash", hash)
 
-  // compare with the matching password
-  bcrypt.compare('iLov3bacon!', hash, function (err, res) {
-    console.log("does this match?", res)
-  });
+  // // compare with the matching password
+  // bcrypt.compare('iLov3bacon!', hash, function (err, res) {
+  //   console.log("does this match?", res)
+  // })
 
-  // compare with a password that doesn't match
-  bcrypt.compare('bacon_sucks', hash, function (err, res) {
-    console.log("does this match?", res)
-  });
-});
+  // // compare with a password that doesn't match
+  // bcrypt.compare('bacon_sucks', hash, function (err, res) {
+  //   console.log("does this match?", res)
+  // })
+
 
 app.get('/user/:id', (req, res, next) => {
   knex('alerts')
@@ -57,16 +55,34 @@ app.get('/user/:id', (req, res, next) => {
     })
 })
 
-app.post('/create/', (req, res, next) => {
-  knex('users').insert(req.body).returning('*')
-    .then((user) => {
-      res.status(200).send(user);
-    })
 
+app.post('/create/', (req, res, next) => {
+  console.log("req.body.password", req.body.hashed_password)
+  bcrypt.hash(req.body.hashed_password, saltRounds, function (err, hash) {
+    console.log("hash", hash)
+  })
+  knex('users').insert(req.body)
+    .then((user) => {
+      res.status(200).send(user)
+      console.log("user", user)
+    })
     .catch((err) => {
-      next(err);
-    });
+      next(err)
+    })
 })
+
+
+
+// app.post('/create/', (req, res, next) => {
+//   knex('users').insert(req.body).returning('*')
+//     .then((user) => {
+//       res.status(200).send(user);
+//     })
+
+//     .catch((err) => {
+//       next(err);
+//     });
+// })
 
 checkMax = (alertType, weatherTemp, chosenTemp, phone, body) => {
    this.interval = setInterval(() => {
