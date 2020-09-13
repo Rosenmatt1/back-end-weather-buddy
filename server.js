@@ -32,7 +32,6 @@ app.get('/', (req, res) => {
     });
 })
 
-
   // // compare with the matching password
   // bcrypt.compare('iLov3bacon!', hash, function (err, res) {
   //   console.log("does this match?", res)
@@ -42,7 +41,6 @@ app.get('/', (req, res) => {
   // bcrypt.compare('bacon_sucks', hash, function (err, res) {
   //   console.log("does this match?", res)
   // })
-
 
 app.get('/user/:id', (req, res, next) => {
   knex('alerts')
@@ -71,8 +69,6 @@ app.post('/create/', (req, res, next) => {
     })
 })
 
-
-
 // app.post('/create/', (req, res, next) => {
 //   knex('users').insert(req.body).returning('*')
 //     .then((user) => {
@@ -98,6 +94,16 @@ checkMax = (alertType, weatherTemp, chosenTemp, phone, body) => {
     }
   }, 30000)
 }
+
+// # ┌───────────── minute (0 - 59)
+// # │ ┌───────────── hour (0 - 23)
+// # │ │ ┌───────────── day of the month (1 - 31)
+// # │ │ │ ┌───────────── month (1 - 12)
+// # │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
+// # │ │ │ │ │                                   7 is also Sunday on some systems)
+// # │ │ │ │ │
+// # │ │ │ │ │
+// # * * * * * <command to execute></command>
 
 checkMin = (alertType, weatherTemp, chosenTemp, phone, body) => {
   setInterval(() => {
