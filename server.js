@@ -125,7 +125,7 @@ checkMin = (alertType, weatherTemp, chosenTemp, phone, body) => {
 // Added a cron timer example
 
 // var CronJob = require('cron').CronJob;
-// var job = new CronJob('* * * * * *', function() {
+// var job = new CronJob('0 19 31 3 *', function() {
 //   console.log('You will see this message every second');
 // }, null, true, 'America/Los_Angeles');
 // job.start();
