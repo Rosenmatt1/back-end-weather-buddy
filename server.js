@@ -122,6 +122,14 @@ checkMin = (alertType, weatherTemp, chosenTemp, phone, body) => {
 
 //for capstone doign the text in a post request,but will use a chron function in the future https://www.npmjs.com/package/node-schedule  a function that runs every night and maps over all alerts and sends text if meets criteria"
 
+// Added a cron timer example
+
+// var CronJob = require('cron').CronJob;
+// var job = new CronJob('* * * * * *', function() {
+//   console.log('You will see this message every second');
+// }, null, true, 'America/Los_Angeles');
+// job.start();
+
 app.post('/alert/', (req, res, next) => {
   knex('alerts').insert(req.body).returning('*')
     .then((alert) => {
