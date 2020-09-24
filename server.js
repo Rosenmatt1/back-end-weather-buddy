@@ -17,6 +17,8 @@ const accountSid = process.env.ACCOUNT_SID
 const authToken = process.env.AUTH_TOKEN
 const myNumber = process.env.MY_NUMBER
 
+var CronJob = require('cron').CronJob;
+
 app.use(parser.json())
 app.use(cors())
 
@@ -94,6 +96,19 @@ checkMax = (alertType, weatherTemp, chosenTemp, phone, body) => {
     }
   }, 30000)
 }
+
+// Seconds: 0-59
+// Minutes: 0-59
+// Hours: 0-23
+// Day of Month: 1-31
+// Months: 0-11 (Jan-Dec)
+// Day of Week: 0-6 (Sun-Sat)
+
+const job = new CronJob('* 10 * * * *', function() {
+	const d = new Date();
+	console.log('At Ten Minutes:', d);
+});
+job.start();
 
 // # ┌───────────── minute (0 - 59)
 // # │ ┌───────────── hour (0 - 23)
