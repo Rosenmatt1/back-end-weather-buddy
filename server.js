@@ -82,19 +82,33 @@ app.post('/create/', (req, res, next) => {
 //     });
 // })
 
+// checkMax = (alertType, weatherTemp, chosenTemp, phone, body) => {
+//    this.interval = setInterval(() => {
+//     const date = new Date()
+//     const hour = date.getHours()
+//     const minute = date.getMinutes()
+//     if (alertType === 'max' && weatherTemp > chosenTemp && hour === 12 && minute === 49) {
+//       return client.messages.create({
+//         to: phone,
+//         from: '+18572693922',
+//         body: body
+//       })
+//     }
+//   }, 30000)
+// }
+
 checkMax = (alertType, weatherTemp, chosenTemp, phone, body) => {
-   this.interval = setInterval(() => {
-    const date = new Date()
-    const hour = date.getHours()
-    const minute = date.getMinutes()
-    if (alertType === 'max' && weatherTemp > chosenTemp && hour === 12 && minute === 49) {
+   const date = new Date()
+   const job = new CronJob('* * 17 * * *', function() {
+    if (alertType === 'max' && weatherTemp > chosenTemp) {
       return client.messages.create({
         to: phone,
         from: '+18572693922',
         body: body
       })
     }
-  }, 30000)
+  })
+  job.start();
 }
 
 // Seconds: 0-59
@@ -104,11 +118,11 @@ checkMax = (alertType, weatherTemp, chosenTemp, phone, body) => {
 // Months: 0-11 (Jan-Dec)
 // Day of Week: 0-6 (Sun-Sat)
 
-const job = new CronJob('* 10 * * * *', function() {
-	const d = new Date();
-	console.log('At Ten Minutes:', d);
-});
-job.start();
+// const job = new CronJob('* * 17 * * *', function() {
+// 	const d = new Date();
+// 	console.log('At Ten Minutes:', d);
+// });
+// job.start();
 
 // # ┌───────────── minute (0 - 59)
 // # │ ┌───────────── hour (0 - 23)
@@ -163,7 +177,6 @@ app.post('/alert/', (req, res, next) => {
 
           checkMax(alertType, weatherTemp, chosenTemp, phone, body)
           checkMin(alertType, weatherTemp, chosenTemp, phone, body)
-
         })
     })
     .catch((err) => {
