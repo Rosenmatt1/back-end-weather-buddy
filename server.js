@@ -134,20 +134,36 @@ checkMax = (alertType, weatherTemp, chosenTemp, phone, body) => {
 // # │ │ │ │ │
 // # * * * * * <command to execute></command>
 
+// checkMin = (alertType, weatherTemp, chosenTemp, phone, body) => {
+//   setInterval(() => {
+//     const date = new Date()
+//     const hour = date.getHours()
+//     const minute = date.getMinutes()
+//     if (alertType === 'min' && weatherTemp < chosenTemp && hour === 19 && minute === 00) {
+//       return client.messages.create({
+//         to: phone,
+//         from: '+18572693922',
+//         body: body
+//       })
+//     }
+//   }, 30000)
+// }
+
 checkMin = (alertType, weatherTemp, chosenTemp, phone, body) => {
-  setInterval(() => {
     const date = new Date()
-    const hour = date.getHours()
-    const minute = date.getMinutes()
-    if (alertType === 'min' && weatherTemp < chosenTemp && hour === 19 && minute === 00) {
-      return client.messages.create({
-        to: phone,
-        from: '+18572693922',
-        body: body
-      })
-    }
-  }, 30000)
+
+    const job = new CronJob('* * 17 * * *', function() {
+      if (alertType === 'min' && weatherTemp < chosenTemp) {
+        return client.messages.create({
+          to: phone,
+          from: '+18572693922',
+          body: body
+        })
+      }
+    });
+    job.start();
 }
+
 
 //for capstone doign the text in a post request,but will use a chron function in the future https://www.npmjs.com/package/node-schedule  a function that runs every night and maps over all alerts and sends text if meets criteria"
 
